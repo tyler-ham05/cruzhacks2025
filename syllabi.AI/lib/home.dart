@@ -4,6 +4,7 @@ import 'ai_prompter.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
+import 'class_generator.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -67,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => const AiPrompter(),
+                        builder: (context) => const ClassGenerator(),
                       ),
                     );
                   },
