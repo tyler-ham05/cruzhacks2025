@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'auth_gate.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
-import 'ai_prompter.dart';
+import 'ai_syllabus_reader.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 

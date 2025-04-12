@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/ai_prompter.dart';
-import 'entry_fields.dart';
+import 'package:flutter_application_1/ai_syllabus_reader.dart';
+import 'manual_fields.dart';
 
 class ClassGenerator extends StatelessWidget {
   const ClassGenerator({super.key});
