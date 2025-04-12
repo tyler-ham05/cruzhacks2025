@@ -45,20 +45,36 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: GridView.builder(
-        itemCount: tempdata.length + 1,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-        ),
-        itemBuilder: (context, index) {
-          if (index < tempdata.length){
-          return Card(child: Text(tempdata[index]));
-          }
-          else{return GestureDetector(onTap:() {Navigator.of(context).push(
-    MaterialPageRoute(builder: (context) => const AiPrompter()),
-  );},child:Card(child: Icon(Icons.add)));}
-        },
+      //appBar: AppBar(),
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            title: Text("Your Dashboard", style: TextStyle(fontSize: 30),),
+            centerTitle: false,
+          ),
+          SliverGrid.builder(
+            itemCount: tempdata.length + 1,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+            ),
+            itemBuilder: (context, index) {
+              if (index < tempdata.length) {
+                return Card(child: Text(tempdata[index]));
+              } else {
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const AiPrompter(),
+                      ),
+                    );
+                  },
+                  child: Card(child: Icon(Icons.add)),
+                );
+              }
+            },
+          ),
+        ],
       ),
     );
   }
