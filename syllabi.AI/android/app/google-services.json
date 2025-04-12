@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "839804029521",
+    "project_id": "cruz-hacks-2025",
+    "storage_bucket": "cruz-hacks-2025.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:839804029521:android:ff8a061475b3a648f0c670",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQqsu7_yZuJq5Hw-G1gLxD5JcCe4P8te0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

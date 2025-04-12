@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
 import 'ai_prompter.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 const apiKey = 'AIzaSyCkRq8eKTR3ueWQBH7IIcdZQCNFbXwDWAs';
 
-void main() {
+void main() async{
   Gemini.init(apiKey: apiKey);
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+  options: DefaultFirebaseOptions.currentPlatform,
+);
   runApp(const MyApp());
 }
 
