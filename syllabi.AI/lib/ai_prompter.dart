@@ -37,6 +37,7 @@ class _AiPrompterState extends State<AiPrompter> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         leading: BackButton(onPressed: (){Navigator.pop(context);},),
         title: Text("New Syllabus"),
+        
       ),
       body: Center(
         child: Column(
