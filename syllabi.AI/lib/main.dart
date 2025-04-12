@@ -1,7 +1,6 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
+import 'ai_prompter.dart';
 
 const apiKey = 'AIzaSyCkRq8eKTR3ueWQBH7IIcdZQCNFbXwDWAs';
 
@@ -41,59 +40,25 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String AIinput = "";
-  String outputText = "";
-  final gemini = Gemini.instance;
-  
-  void prompt() {
-    print(AIinput);
-    setState(() {
-  print("Pressed button");
-  
-  Gemini.instance.prompt(parts: [
-  Part.text(AIinput),
-]).then((value) {
-  outputText = (value?.output) as String;
-  setState(() {
-    
-  });
-}).catchError((e) {
-  outputText = ('error ${e}');
-});
-
-});
-    }
-
+  var tempdata = ["class1", "class2", "class3"];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Container(height:MediaQuery.sizeOf(context).height * .75, child:SingleChildScrollView(child: Text(outputText),),),
-            TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Enter ur AI prompt :D',
-              ),
-              onChanged: (text){
-                AIinput = "The following text after these instructions should be a college syllabus. Your task is to print the concepts that a student will learn in a class with primers for each concept. If for some reason the prompt does not look like a college syllabus, reprompt the user. The content is as follows: ${text}"; 
-              },
-            ),
-          ],
+      appBar: AppBar(),
+      body: GridView.builder(
+        itemCount: tempdata.length + 1,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: prompt,
-        tooltip: "PROMPT",
-        child: const Icon(Icons.add),
+        itemBuilder: (context, index) {
+          if (index < tempdata.length){
+          return Card(child: Text(tempdata[index]));
+          }
+          else{return GestureDetector(onTap:() {Navigator.of(context).push(
+    MaterialPageRoute(builder: (context) => const AiPrompter()),
+  );},child:Card(child: Icon(Icons.add)));}
+        },
       ),
     );
   }
