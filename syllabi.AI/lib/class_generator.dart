@@ -85,7 +85,7 @@ class ClassGenerator extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => const EntryFields(),
+                    builder: (context) => const EntryFields(name: "",concepts: [],keywords: [],dates:[],),
                   ),
                 );
               },

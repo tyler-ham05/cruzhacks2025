@@ -3,7 +3,17 @@ import 'backend_services.dart';
 import 'package:intl/intl.dart';
 
 class EntryFields extends StatefulWidget {
-  const EntryFields({super.key});
+  final String name;
+  final List<String> concepts;
+  final List<String> keywords;
+  final List<Map> dates;
+  const EntryFields({
+    super.key,
+    required this.name,
+    required this.concepts,
+    required this.keywords,
+    required this.dates,
+  });
 
   @override
   State<EntryFields> createState() => _EntryFieldsState();
@@ -13,14 +23,13 @@ class _EntryFieldsState extends State<EntryFields> {
   String name = "";
   List<String> concepts = [];
   List<String> keywords = [];
-  List<Map> dates = [
-    
-  ];
+  List<Map> dates = [];
   String concept = "";
   String keyword = "";
   String date = "";
   DateTime selectedDate = DateTime.now();
 
+  TextEditingController controller0 = TextEditingController();
   TextEditingController controller1 = TextEditingController();
   TextEditingController controller2 = TextEditingController();
   TextEditingController controller3 = TextEditingController();
@@ -30,6 +39,18 @@ class _EntryFieldsState extends State<EntryFields> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    name = widget.name;
+    concepts = List.from(widget.concepts);
+    keywords = List.from(widget.keywords);
+    dates = List.from(widget.dates);
+    if(name != ""){
+      print(name);
+      controller0.text = name;
+    }
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -46,6 +67,7 @@ class _EntryFieldsState extends State<EntryFields> {
             style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
           ),
           TextFormField(
+            controller: controller0,
             decoration: InputDecoration(
               border: OutlineInputBorder(),
               hintText: 'Macroeconomics, DSA, etc...',
@@ -139,8 +161,7 @@ class _EntryFieldsState extends State<EntryFields> {
             controller: controller2,
             decoration: InputDecoration(
               border: OutlineInputBorder(),
-              hintText:
-                  'DFS, Inelastic, Python, etc.',
+              hintText: 'DFS, Inelastic, Python, etc.',
             ),
             onChanged: (value) {
               keyword = value;
@@ -183,7 +204,9 @@ class _EntryFieldsState extends State<EntryFields> {
                   return Card(
                     child: Padding(
                       padding: const EdgeInsets.all(3.0),
-                      child: Text("${dates[index]["description"]} @ ${dates[index]["date"]}"),
+                      child: Text(
+                        "${dates[index]["description"]} @ ${dates[index]["date"]}",
+                      ),
                     ),
                   );
                 }),
@@ -215,41 +238,46 @@ class _EntryFieldsState extends State<EntryFields> {
                       firstDate: DateTime(2000),
                       lastDate: DateTime(2100),
                     );
-                
+
                     if (pickedDate != null) {
                       setState(() {
                         selectedDate = pickedDate;
                       });
                     }
                   },
-                  child: Text(selectedDate != null
-                      ? DateFormat('MMMM d, y').format(selectedDate)
-                      : 'Pick a date'),
+                  child: Text(
+                    selectedDate != null
+                        ? DateFormat('MMMM d, y').format(selectedDate)
+                        : 'Pick a date',
+                  ),
                 ),
-              )
+              ),
             ],
           ),
-          
-          TextButton(onPressed: () {
-            if(date != ""){
-              setState(() {
-                _clearTextField(controller4);
-                dates.add({"description":date, "date":DateFormat("MMMM d, y").format(selectedDate)});
-              });
 
-            }
-          }, child: Text("Add")),
-          
+          TextButton(
+            onPressed: () {
+              if (date != "") {
+                setState(() {
+                  _clearTextField(controller4);
+                  dates.add({
+                    "description": date,
+                    "date": DateFormat("MMMM d, y").format(selectedDate),
+                  });
+                });
+              }
+            },
+            child: Text("Add"),
+          ),
+
           TextButton(
             onPressed: () {
               pushToDataBase(name, concepts, keywords, dates);
             },
             child: Text("Create Course"),
           ),
-          
         ],
       ),
     );
   }
 }
-
