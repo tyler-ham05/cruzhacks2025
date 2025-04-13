@@ -71,7 +71,7 @@ class _AiPrompterState extends State<AiPrompter> {
               ),
               onChanged: (text) {
                 AIinput =
-                    "Please return a class listing based on the provided syllabus in this exact JSON structure: {“name” : string “concepts” : List<string> “keywords” : List<string> “dates” : List<Map<string, string>>} Only output the JSON as a string, no explanation. Return only the JSON structure. Do not include triple backticks or any formatting—just the raw JSON. $text";
+                    "Please return a class listing based on the provided syllabus in this exact JSON structure: {“name” : string “concepts” : List<string> “keywords” : List<string> “dates” : List<Map<string, string>> } Only output the JSON as a string, no explanation. For the date structure it with the full month full day, full year in one string. the formateReturn only the JSON structure. Do not include triple backticks or any formatting—just the raw JSON. $text";
               },
             ),
           ],
