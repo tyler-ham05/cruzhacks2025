@@ -37,6 +37,6 @@ pullFromDatabase() async{
   }
   catch(e){
     print("evil things happened");
-    return null;
+    return [];
   }
 }

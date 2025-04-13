@@ -38,9 +38,9 @@ class _ClassViewState extends State<ClassView> {
   void initState() {
     super.initState();
     name = widget.data["course_name"] as String;
-    concepts = widget.data["concepts"] as List<String>;
-    keywords = widget.data["keywords"] as  List<String>;
-    dates = widget.data["dates"] as Map<String, String>;
+    concepts = widget.data["concepts"];
+    keywords = widget.data["key_words"];
+    dates = widget.data["dates"];
   }
   Widget build(BuildContext context) {
     // Flatten test map into entries
@@ -63,10 +63,10 @@ class _ClassViewState extends State<ClassView> {
           _buildList(concepts),
 
           _buildSectionHeader("Keywords"),
-          _buildList(concepts), // reuse list if needed
+          _buildList(keywords), // reuse list if needed
 
           _buildSectionHeader("Exam Dates"),
-          _buildKeyValueList(entries),
+          _buildKeyValueList(dates),
         ],
       ),
     );
@@ -89,7 +89,7 @@ class _ClassViewState extends State<ClassView> {
   }
 
   /// Widget to create a list of strings
-  SliverList _buildList(List<String> items) {
+  SliverList _buildList(items) {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (context, index) {
@@ -110,7 +110,7 @@ class _ClassViewState extends State<ClassView> {
   }
 
   /// Widget to create a list from map entries (key-value pairs)
-  SliverList _buildKeyValueList(List<MapEntry<String, String>> entries) {
+  SliverList _buildKeyValueList(entries) {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (context, index) {
@@ -122,8 +122,8 @@ class _ClassViewState extends State<ClassView> {
               borderRadius: BorderRadius.circular(12),
             ),
             child: ListTile(
-              title: Text(entry.value),
-              subtitle: Text(entry.key),
+              title: Text(entry["description"]),
+              subtitle: Text(entry["date"]),
             ),
           );
         },
