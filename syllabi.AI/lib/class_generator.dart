@@ -8,8 +8,13 @@ class ClassGenerator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(leading: BackButton(onPressed: (){Navigator.pop(context);}),),
+      appBar: AppBar(title: Text('Your Syllabi Dashboard' ,style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,),),
+          backgroundColor: Color.fromARGB(255, 255, 205, 125), leading: BackButton(onPressed: (){Navigator.pop(context);}),),
       body: Center(
+        
   child: Row(
     mainAxisAlignment: MainAxisAlignment.center,
     crossAxisAlignment: CrossAxisAlignment.start,

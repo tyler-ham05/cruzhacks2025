@@ -43,13 +43,20 @@ class _AiPrompterState extends State<AiPrompter> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        backgroundColor: Color.fromARGB(255, 255, 205, 125),
         leading: BackButton(
           onPressed: () {
             Navigator.pop(context);
           },
         ),
-        title: Text("New Syllabus"),
+        title: Text(
+                "Syllabi AI Helper",
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
       ),
       body: Center(
         child: Column(

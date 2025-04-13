@@ -37,8 +37,20 @@ class _MyHomePageState extends State<MyHomePage> {
                           return CustomScrollView(
           slivers: [
             SliverAppBar(
-              title: Text("Your Dashboard", style: TextStyle(fontSize: 30)),
-              centerTitle: false,
+              backgroundColor: Colors.deepPurple,
+            expandedHeight: 120,
+            pinned: true,
+            flexibleSpace: FlexibleSpaceBar(
+              titlePadding: EdgeInsets.only(left: 16, bottom: 16),
+              title: Text(
+                "Your Dashboard",
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+            ),
               actions: [
                 IconButton(
                   onPressed: () {
@@ -106,8 +118,20 @@ class _MyHomePageState extends State<MyHomePage> {
         return CustomScrollView(
           slivers: [
             SliverAppBar(
-              title: Text("Your Dashboard", style: TextStyle(fontSize: 30)),
-              centerTitle: false,
+              backgroundColor: const Color.fromARGB(255, 255, 205, 125),
+            expandedHeight: 1,
+            pinned: true,
+            flexibleSpace: FlexibleSpaceBar(
+              titlePadding: EdgeInsets.only(left: 16, bottom: 8),
+              title: Text(
+                "Your Syllabi Dashboard",
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+            ),
               actions: [
                 IconButton(
                   onPressed: () {
@@ -149,8 +173,21 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                       );
                     },
-                    child: Card(child: Text(fullData[index]["course_name"])),
-                  );
+                    child: Card(shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16)), elevation: 4,
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(height: 12),
+                            Text(
+                              tempdata[index],
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 40,
+                              ),),]
+                  ),),),);
                 } else {
                   return GestureDetector(
                     onTap: () {

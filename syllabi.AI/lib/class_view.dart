@@ -50,12 +50,20 @@ class _ClassViewState extends State<ClassView> {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
+            backgroundColor: const Color.fromARGB(255, 255, 205, 125),
             floating: true,
             pinned: true,
             snap: false,
             expandedHeight: 100,
             flexibleSpace: FlexibleSpaceBar(
-              title: Text("Class Organizer"),
+              title: Text(
+                "Class Organizer",
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
             ),
           ),
 
