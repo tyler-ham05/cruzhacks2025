@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'backend_services.dart';
+import 'package:intl/intl.dart';
 
 class EntryFields extends StatefulWidget {
   const EntryFields({super.key});
@@ -10,19 +11,24 @@ class EntryFields extends StatefulWidget {
 
 class _EntryFieldsState extends State<EntryFields> {
   String name = "";
-  List<String> concepts = ["beating my meat", "beating it", "super beating it"];
-  List<String> keywords = ["goo goo ga", "geee", "goo goo"];
+  List<String> concepts = [];
+  List<String> keywords = [];
   List<Map> dates = [
-    {"description": "midterm", "date": "4/7/2025"},
+    
   ];
   String concept = "";
   String keyword = "";
   String date = "";
-  
-  TextEditingController _controller = TextEditingController();
-  void _clearTextField() {
-    _controller.clear(); // 👈 This clears the text field
+  DateTime selectedDate = DateTime.now();
+
+  TextEditingController controller1 = TextEditingController();
+  TextEditingController controller2 = TextEditingController();
+  TextEditingController controller3 = TextEditingController();
+  TextEditingController controller4 = TextEditingController();
+  void _clearTextField(controller) {
+    controller.clear(); // 👈 This clears the text field
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +51,7 @@ class _EntryFieldsState extends State<EntryFields> {
               hintText: 'Macroeconomics, DSA, etc...',
             ),
             onChanged: (value) {
-              name = value; 
+              name = value;
             },
           ),
           SizedBox(height: 20),
@@ -75,7 +81,7 @@ class _EntryFieldsState extends State<EntryFields> {
             ),
           ),
           TextFormField(
-            controller: _controller,
+            controller: controller1,
             decoration: InputDecoration(
               border: OutlineInputBorder(),
               hintText:
@@ -86,16 +92,20 @@ class _EntryFieldsState extends State<EntryFields> {
             },
             onFieldSubmitted: (value) {
               setState(() {
-                concepts.add(value);
-                _clearTextField();
+                if (value != "") {
+                  concepts.add(value);
+                  _clearTextField(controller1);
+                }
               });
             },
           ),
           TextButton(
             onPressed: () {
               setState(() {
-                concepts.add(concept);
-                _clearTextField();
+                if (concept != "") {
+                  concepts.add(concept);
+                  _clearTextField(controller1);
+                }
               });
             },
             child: Text("Add"),
@@ -125,30 +135,121 @@ class _EntryFieldsState extends State<EntryFields> {
               ),
             ),
           ),
-          TextField(
+          TextFormField(
+            controller: controller2,
             decoration: InputDecoration(
               border: OutlineInputBorder(),
-              hintText: 'Ohm\'s law, DFS, BFS, etc.',
+              hintText:
+                  'DFS, Inelastic, Python, etc.',
             ),
+            onChanged: (value) {
+              keyword = value;
+            },
+            onFieldSubmitted: (value) {
+              setState(() {
+                if (value != "") {
+                  concepts.add(value);
+                  _clearTextField(controller2);
+                }
+              });
+            },
           ),
-          TextButton(onPressed: () {}, child: Text("Add")),
+          TextButton(
+            onPressed: () {
+              setState(() {
+                if (concept != "") {
+                  keywords.add(keyword);
+                  _clearTextField(controller2);
+                }
+              });
+            },
+            child: Text("Add"),
+          ),
           Text(
             "Important Dates",
             style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
           ),
-          TextField(
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: 'Enter ur AI prompt :D',
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.grey,
+              borderRadius: BorderRadius.circular(16),
+            ),
+            height: 100,
+            child: SingleChildScrollView(
+              child: Wrap(
+                spacing: 4,
+                runSpacing: 4,
+                children: List.generate(dates.length, (index) {
+                  return Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(3.0),
+                      child: Text("${dates[index]["description"]} @ ${dates[index]["date"]}"),
+                    ),
+                  );
+                }),
+              ),
             ),
           ),
-          TextButton(onPressed: () {}, child: Text("Add")),
-
+          Row(
+            children: [
+              SizedBox(
+                width: MediaQuery.sizeOf(context).width * .5,
+                child: TextField(
+                  controller: controller4,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Midterm, Final, etc.',
+                  ),
+                  onChanged: (value) {
+                    date = value;
+                  },
+                ),
+              ),
+              SizedBox(
+                width: MediaQuery.sizeOf(context).width * .5,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    DateTime? pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2000),
+                      lastDate: DateTime(2100),
+                    );
+                
+                    if (pickedDate != null) {
+                      setState(() {
+                        selectedDate = pickedDate;
+                      });
+                    }
+                  },
+                  child: Text(selectedDate != null
+                      ? DateFormat('MMMM d, y').format(selectedDate)
+                      : 'Pick a date'),
+                ),
+              )
+            ],
+          ),
+          
           TextButton(onPressed: () {
-            pushToDataBase( name, concepts, keywords);
-          }, child: Text("Create Course")),
+            if(date != ""){
+              setState(() {
+                _clearTextField(controller4);
+                dates.add({"description":date, "date":DateFormat("MMMM d, y").format(selectedDate)});
+              });
+
+            }
+          }, child: Text("Add")),
+          
+          TextButton(
+            onPressed: () {
+              pushToDataBase(name, concepts, keywords, dates);
+            },
+            child: Text("Create Course"),
+          ),
+          
         ],
       ),
     );
   }
 }
+

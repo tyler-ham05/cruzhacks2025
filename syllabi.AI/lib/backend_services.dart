@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:intl/intl.dart';
+//import 'package:intl/intl.dart';
 
 
-pushToDataBase(String name, List<String>concepts,List<String>keyWords)async {
+pushToDataBase(String name, List<String>concepts,List<String>keyWords, dates)async {
   try {
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
     final String user = FirebaseAuth.instance.currentUser!.uid;
@@ -13,7 +13,7 @@ pushToDataBase(String name, List<String>concepts,List<String>keyWords)async {
       "course_name": name,
       "concepts": concepts,
       "key_words": keyWords, 
-      "dates": [], 
+      "dates": dates, 
     };
 
     await firestore.collection(user).doc(name).set(data);
