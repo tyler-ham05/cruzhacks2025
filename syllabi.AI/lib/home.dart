@@ -33,7 +33,71 @@ class _MyHomePageState extends State<MyHomePage> {
                               child: Text('Error: ${snapshot.error}'));
                         }
                         if (!snapshot.hasData || snapshot.data == null) {
-                          return Center(child: Text('No data available'));
+                          List data = [];
+                          return CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              title: Text("Your Dashboard", style: TextStyle(fontSize: 30)),
+              centerTitle: false,
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute<ProfileScreen>(
+                        builder:
+                            (context) => ProfileScreen(
+                              appBar: AppBar(title: const Text('User Profile')),
+                              actions: [
+                                SignedOutAction((context) {
+                                  Navigator.of(context).pop();
+                                }),
+                              ],
+                              children: [
+                                const Divider(),
+                                Padding(padding: const EdgeInsets.all(2)),
+                              ],
+                            ),
+                      ),
+                    );
+                  },
+                  icon: Icon(Icons.settings),
+                ),
+              ],
+            ),
+            SliverGrid.builder(
+              itemCount: data.length + 1,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+              ),
+              itemBuilder: (context, index) {
+                if (index < data.length) {
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => ClassView(data: data[index]),
+                        ),
+                      );
+                    },
+                    child: Card(child: Text(data[index]["course_name"])),
+                  );
+                } else {
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const ClassGenerator(),
+                        ),
+                      );
+                    },
+                    child: Card(child: Icon(Icons.add)),
+                  );
+                }
+              },
+            ),
+          ],
+        );
                         }
         //print(snapshot);
         List<Map<String, dynamic>> fullData =
