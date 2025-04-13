@@ -8,10 +8,10 @@ class ClassGenerator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Your Syllabi Dashboard' ,style: TextStyle(
+      appBar: AppBar(centerTitle: false,  title: Text('Upload New Class' ,style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,),),
+                  ),),
           backgroundColor: Color.fromARGB(255, 255, 205, 125), leading: BackButton(onPressed: (){Navigator.pop(context);}),),
       body: Center(
         
@@ -78,7 +78,7 @@ class ClassGenerator extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "Add More Details About Your Class",
+              "Or Add Details About Your Class",
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                     fontWeight: FontWeight.bold,
@@ -109,7 +109,7 @@ class ClassGenerator extends StatelessWidget {
                     padding: EdgeInsets.all(16),
                     child: Center(
                       child: Text(
-                        "Manual Class Entry",
+                        "Manual",
                         style: TextStyle(
                           fontSize: 32,
                           fontWeight: FontWeight.bold,

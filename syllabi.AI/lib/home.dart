@@ -37,11 +37,10 @@ class _MyHomePageState extends State<MyHomePage> {
                           return CustomScrollView(
           slivers: [
             SliverAppBar(
-              backgroundColor: Colors.deepPurple,
+              backgroundColor: const Color.fromARGB(255, 255, 205, 125),
             expandedHeight: 120,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
-              titlePadding: EdgeInsets.only(left: 16, bottom: 16),
               title: Text(
                 "Your Dashboard",
                 style: TextStyle(
@@ -114,24 +113,19 @@ class _MyHomePageState extends State<MyHomePage> {
         //print(snapshot);
         List<Map<String, dynamic>> fullData =
                             snapshot.data as List<Map<String, dynamic>>;
-        print(fullData);
         return CustomScrollView(
           slivers: [
             SliverAppBar(
-              backgroundColor: const Color.fromARGB(255, 255, 205, 125),
+              centerTitle: false,
+              backgroundColor: const Color.fromRGBO(255, 205, 125, 1),
             expandedHeight: 1,
-            pinned: true,
-            flexibleSpace: FlexibleSpaceBar(
-              titlePadding: EdgeInsets.only(left: 16, bottom: 8),
               title: Text(
                 "Your Syllabi Dashboard",
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
                 ),
               ),
-            ),
               actions: [
                 IconButton(
                   onPressed: () {
@@ -182,10 +176,10 @@ class _MyHomePageState extends State<MyHomePage> {
                           children: [
                             SizedBox(height: 12),
                             Text(
-                              tempdata[index],
+                              fullData[index]["course_name"],
                               style: TextStyle(
                                 fontWeight: FontWeight.w600,
-                                fontSize: 40,
+                                fontSize: 20,
                               ),),]
                   ),),),);
                 } else {
