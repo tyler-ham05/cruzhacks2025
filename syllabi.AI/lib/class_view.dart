@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/concept_view.dart';
-
+import 'home.dart';
+import 'backend_services.dart';
 
 class ClassView extends StatefulWidget {
   final Map<String, dynamic> data;
   const ClassView({super.key, required this.data});
-  
+
   @override
   State<ClassView> createState() => _ClassViewState();
 }
@@ -24,6 +25,7 @@ class _ClassViewState extends State<ClassView> {
     keywords = widget.data["key_words"];
     dates = widget.data["dates"];
   }
+
   Widget build(BuildContext context) {
     // Flatten test map into entries
     return Scaffold(
@@ -31,15 +33,51 @@ class _ClassViewState extends State<ClassView> {
         slivers: [
           SliverAppBar(
             backgroundColor: const Color.fromARGB(255, 255, 205, 125),
-              centerTitle:  false,
-          
-              title: Text(
-                name,
-                style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                ),
+            centerTitle: false,
+
+            title: Text(
+              name,
+              style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+            ),
+            actions: [
+              IconButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text("Confirm Delete"),
+                        content: Text(
+                          "Are you sure you want to delete this class?",
+                        ),
+                        actions: [
+                          TextButton(
+                            child: Text("Cancel"),
+                            onPressed: () {
+                              Navigator.of(context).pop(); // close dialog
+                            },
+                          ),
+                          TextButton(
+                            child: Text("Delete"),
+                            onPressed: () {
+                              deleteDocument(name);
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => MyHomePage(title: "homepage"),
+                                ),
+                                (route) => false,
+                              );
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                icon: Icon(Icons.settings),
               ),
+            ],
           ),
 
           _buildSectionHeader("Concepts To Learn"),
@@ -63,9 +101,9 @@ class _ClassViewState extends State<ClassView> {
         child: Text(
           title,
           style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
+            fontWeight: FontWeight.bold,
+            color: Colors.black87,
+          ),
         ),
       ),
     );
@@ -74,49 +112,48 @@ class _ClassViewState extends State<ClassView> {
   /// Widget to create a list of strings
   SliverList _buildList(items) {
     return SliverList(
-      delegate: SliverChildBuilderDelegate(
-        (context, index) {
-          return GestureDetector(
-            onTap: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) =>  ConceptView(name: name,concept:items[index],keywords: keywords),
-                  ),
-                );
-            },
-            child: Card(
-              margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              elevation: 4,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+      delegate: SliverChildBuilderDelegate((context, index) {
+        return GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder:
+                    (context) => ConceptView(
+                      name: name,
+                      concept: items[index],
+                      keywords: keywords,
+                    ),
               ),
-              
-              child: ListTile(
-                title: Text(items[index]),
-                
-              ),
+            );
+          },
+          child: Card(
+            margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            elevation: 4,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
             ),
-          );
-        },
-        childCount: items.length,
-      ),
+
+            child: ListTile(title: Text(items[index])),
+          ),
+        );
+      }, childCount: items.length),
     );
   }
 
- SliverToBoxAdapter _buildKeyWords(items) {
+  SliverToBoxAdapter _buildKeyWords(items) {
     return SliverToBoxAdapter(
       child: Center(
         child: Wrap(
           spacing: 8,
           runSpacing: 8,
           children: List.generate(items.length, (index) {
-                    return Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(items[index]),
-                      ),
-                    );
-                  }),
+            return Card(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(items[index]),
+              ),
+            );
+          }),
         ),
       ),
     );
@@ -125,24 +162,20 @@ class _ClassViewState extends State<ClassView> {
   /// Widget to create a list from map entries (key-value pairs)
   SliverList _buildKeyValueList(entries) {
     return SliverList(
-      delegate: SliverChildBuilderDelegate(
-        (context, index) {
-          final entry = entries[index];
-          return Card(
-            margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            elevation: 4,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: ListTile(
-              title: Text(entry["description"]),
-              subtitle: Text(entry["date"]),
-            ),
-          );
-        },
-        childCount: entries.length,
-      ),
+      delegate: SliverChildBuilderDelegate((context, index) {
+        final entry = entries[index];
+        return Card(
+          margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          elevation: 4,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: ListTile(
+            title: Text(entry["description"]),
+            subtitle: Text(entry["date"]),
+          ),
+        );
+      }, childCount: entries.length),
     );
   }
 }
-

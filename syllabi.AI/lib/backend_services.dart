@@ -40,3 +40,15 @@ pullFromDatabase() async{
     return [];
   }
 }
+
+deleteDocument(name){
+  FirebaseFirestore.instance
+  .collection(FirebaseAuth.instance.currentUser!.uid)
+  .doc(name)
+  .delete()
+  .then((_) {
+  })
+  .catchError((error) {
+    print("Error deleting document: $error");
+  });
+} 

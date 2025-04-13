@@ -78,7 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     );
                   },
-                  icon: Icon(Icons.settings),
+                  icon: Icon(Icons.person),
                 ),
               ],
             ),
