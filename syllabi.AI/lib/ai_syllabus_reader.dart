@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
+// Adjust the path if needed
+import 'dart:convert'; //convert library
 
 class AiPrompter extends StatefulWidget {
   const AiPrompter({super.key});
@@ -11,7 +13,7 @@ class AiPrompter extends StatefulWidget {
 class _AiPrompterState extends State<AiPrompter> {
   @override
   String AIinput = "";
-  String outputText = "";
+  var outputText = "";
   final gemini = Gemini.instance;
 
   void prompt() {
@@ -19,25 +21,40 @@ class _AiPrompterState extends State<AiPrompter> {
     setState(() {
       print("Pressed button");
 
-      Gemini.instance
-          .prompt(parts: [Part.text(AIinput)])
-          .then((value) {
-            outputText = (value?.output) as String;
-            setState(() {});
-          })
-          .catchError((e) {
-            outputText = ('error ${e}');
-          });
+      //------------------added------------------
+      Gemini.instance.prompt(parts: [Part.text(AIinput)]).then((value) {
+        print(value);
+        print("asdfasd");
+        var rawJsonString = value?.output;
+        print(rawJsonString);
+        rawJsonString = rawJsonString
+            ?.replaceAll("'''", "")
+            .replaceAll("json", "")
+            .replaceAll("\n", "");
+        Map<String, dynamic> map = jsonDecode(rawJsonString ?? 'bugged out');
+
+        print(map);
+        print(map["name"]);
+        print("done");
+        // Access fields
+        outputText = map.toString();
+
+        //need loading circle probably
+      });
     });
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        leading: BackButton(onPressed: (){Navigator.pop(context);},),
+        leading: BackButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: Text("New Syllabus"),
-        
       ),
       body: Center(
         child: Column(
@@ -50,11 +67,11 @@ class _AiPrompterState extends State<AiPrompter> {
             TextField(
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
-                hintText: 'Enter ur AI prompt :D',
+                hintText: 'upload your a syllabus as a string',
               ),
               onChanged: (text) {
                 AIinput =
-                    "The following text after these instructions should be a college syllabus. Your task is to print the concepts that a student will learn in a class with primers for each concept. If for some reason the prompt does not look like a college syllabus, reprompt the user. The content is as follows: $text";
+                    "Please return a class listing based on the provided syllabus in this exact JSON structure: {“name” : string “concepts” : List<string> “keywords” : List<string> “dates” : List<Map<string, string>>} Only output the JSON as a string, no explanation. Return only the JSON structure. Do not include triple backticks or any formatting—just the raw JSON. $text";
               },
             ),
           ],
