@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/concept_view.dart';
+
 
 class ClassView extends StatefulWidget {
   final Map<String, dynamic> data;
@@ -13,26 +15,6 @@ class _ClassViewState extends State<ClassView> {
   var concepts;
   var keywords;
   var dates;
-  List<Map<String, String>> test = [
-    {"2-27-2025": "Introduction to AI Exam"},
-    {"3-15-2025": "Advanced AI Exam"},
-    {"4-10-2025": "AI Ethics Exam"},
-    {"5-1-2025": "AI Capstone Project"},
-    {"6-1-2025": "AI Final Exam"},
-    {"7-1-2025": "AI Group Project"},
-    {"8-1-2025": "AI Presentation"},
-    {"9-1-2025": "AI Research Paper"},
-    {"10-1-2025": "AI Portfolio Review"},
-    {"11-1-2025": "AI Internship Application"},
-    {"12-1-2025": "AI Job Interview"},
-    {"13-1-2025": "AI Networking Event"},
-    {"14-1-2025": "AI Conference Attendance"},
-    {"15-1-2025": "AI Certification Exam"},
-    {"16-1-2025": "AI Industry Trends Report"},
-  ];
-
-
-  
 
   @override
   void initState() {
@@ -44,8 +26,6 @@ class _ClassViewState extends State<ClassView> {
   }
   Widget build(BuildContext context) {
     // Flatten test map into entries
-    final entries = test.expand((map) => map.entries).toList();
-
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -54,7 +34,7 @@ class _ClassViewState extends State<ClassView> {
               centerTitle:  false,
           
               title: Text(
-                "Class Organizer",
+                name,
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
@@ -66,7 +46,7 @@ class _ClassViewState extends State<ClassView> {
           _buildList(concepts),
 
           _buildSectionHeader("Keywords"),
-          _buildList(keywords), // reuse list if needed
+          _buildKeyWords(keywords), // reuse list if needed
 
           _buildSectionHeader("Exam Dates"),
           _buildKeyValueList(dates),
@@ -96,18 +76,48 @@ class _ClassViewState extends State<ClassView> {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (context, index) {
-          return Card(
-            margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            elevation: 4,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: ListTile(
-              title: Text(items[index]),
+          return GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) =>  ConceptView(name: name,concept:items[index],keywords: keywords),
+                  ),
+                );
+            },
+            child: Card(
+              margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              
+              child: ListTile(
+                title: Text(items[index]),
+                
+              ),
             ),
           );
         },
         childCount: items.length,
+      ),
+    );
+  }
+
+ SliverToBoxAdapter _buildKeyWords(items) {
+    return SliverToBoxAdapter(
+      child: Center(
+        child: Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          children: List.generate(items.length, (index) {
+                    return Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(items[index]),
+                      ),
+                    );
+                  }),
+        ),
       ),
     );
   }
@@ -135,3 +145,4 @@ class _ClassViewState extends State<ClassView> {
     );
   }
 }
+

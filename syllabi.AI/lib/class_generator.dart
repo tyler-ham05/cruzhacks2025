@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/ai_syllabus_reader.dart';
 import 'manual_fields.dart';
+import 'package:flutter_application_1/ai_ProbFunc.dart';
 
 class ClassGenerator extends StatelessWidget {
   const ClassGenerator({super.key});
@@ -24,14 +25,7 @@ class ClassGenerator extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              "Upload your Syllabus",
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black87,
-                  ),
-            ),
+            
             const SizedBox(height: 20),
             GestureDetector(
               onTap: () {
@@ -43,7 +37,7 @@ class ClassGenerator extends StatelessWidget {
               },
               child: SizedBox(
                 width: MediaQuery.sizeOf(context).width * 0.6,
-                height: 300,
+                height: MediaQuery.sizeOf(context).height * .6,
                 child: Card(
                   elevation: 4,
                   color: const Color.fromARGB(255, 255, 255, 255),
@@ -56,9 +50,9 @@ class ClassGenerator extends StatelessWidget {
                     padding: EdgeInsets.all(16),
                     child: Center(
                       child: Text(
-                        "AI Syllabus Organizer",
+                        "Upload from syllabus",
                         style: TextStyle(
-                          fontSize: 32,
+                          fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
                         textAlign: TextAlign.center,
@@ -77,14 +71,7 @@ class ClassGenerator extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              "Or Add Details About Your Class",
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black87,
-                  ),
-            ),
+            
             const SizedBox(height: 20),
             GestureDetector(
               onTap: () {
@@ -96,7 +83,7 @@ class ClassGenerator extends StatelessWidget {
               },
               child: SizedBox(
                 width: MediaQuery.sizeOf(context).width * 0.6,
-                height: 300,
+                height: MediaQuery.sizeOf(context).height * .6,
                 child: Card(
                   elevation: 4,
                   color: const Color.fromARGB(255, 255, 255, 255),
@@ -109,9 +96,9 @@ class ClassGenerator extends StatelessWidget {
                     padding: EdgeInsets.all(16),
                     child: Center(
                       child: Text(
-                        "Manual",
+                        "Create Class From Scratch",
                         style: TextStyle(
-                          fontSize: 32,
+                          fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
                         textAlign: TextAlign.center,
@@ -121,6 +108,7 @@ class ClassGenerator extends StatelessWidget {
                 ),
               ),
             ),
+            
           ],
         ),
       ),

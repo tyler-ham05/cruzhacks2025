@@ -20,18 +20,18 @@ class AuthGate extends StatelessWidget {
             headerBuilder: (context, constraints, shrinkOffset) {
               return Padding(
                 padding: const EdgeInsets.all(20),
-                /*child: AspectRatio(
+                child: AspectRatio(
                   aspectRatio: 1,
-                  child: Image.asset('flutterfire_300x.png'),
-                ),*/
+                  child: Image.asset('assets/SYLLABI.png'),
+                ),
               );
             },
             subtitleBuilder: (context, action) {
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: action == AuthAction.signIn
-                    ? const Text('Welcome to FlutterFire, please sign in!')
-                    : const Text('Welcome to Flutterfire, please sign up!'),
+                    ? const Text('Welcome to Syllabi.AI, please sign in!')
+                    : const Text('Welcome to Syllabi.AI, please sign up!'),
               );
             },
             footerBuilder: (context, action) {
@@ -46,10 +46,10 @@ class AuthGate extends StatelessWidget {
             sideBuilder: (context, shrinkOffset) {
               return Padding(
                 padding: const EdgeInsets.all(20),
-                /*child: AspectRatio(
+                child: AspectRatio(
                   aspectRatio: 1,
-                  child: Image.asset('flutterfire_300x.png'),
-                ),*/
+                  child: Image.asset('assets/SYLLABI.png'),
+                ),
               );
             },
           );

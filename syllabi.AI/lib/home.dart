@@ -19,6 +19,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    var fullData = [];
     return Scaffold(
       //appBar: AppBar(),
       body: FutureBuilder(
@@ -32,87 +33,13 @@ class _MyHomePageState extends State<MyHomePage> {
                           return Center(
                               child: Text('Error: ${snapshot.error}'));
                         }
-                        if (!snapshot.hasData || snapshot.data == null) {
-                          List data = [];
-                          return CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              backgroundColor: const Color.fromARGB(255, 255, 205, 125),
-            expandedHeight: 120,
-            pinned: true,
-            flexibleSpace: FlexibleSpaceBar(
-              title: Text(
-                "Your Dashboard",
-                style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-              actions: [
-                IconButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute<ProfileScreen>(
-                        builder:
-                            (context) => ProfileScreen(
-                              appBar: AppBar(title: const Text('User Profile')),
-                              actions: [
-                                SignedOutAction((context) {
-                                  Navigator.of(context).pop();
-                                }),
-                              ],
-                              children: [
-                                const Divider(),
-                                Padding(padding: const EdgeInsets.all(2)),
-                              ],
-                            ),
-                      ),
-                    );
-                  },
-                  icon: Icon(Icons.settings),
-                ),
-              ],
-            ),
-            SliverGrid.builder(
-              itemCount: data.length + 1,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-              ),
-              itemBuilder: (context, index) {
-                if (index < data.length) {
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => ClassView(data: data[index]),
-                        ),
-                      );
-                    },
-                    child: Card(child: Text(data[index]["course_name"])),
-                  );
-                } else {
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const ClassGenerator(),
-                        ),
-                      );
-                    },
-                    child: Card(child: Icon(Icons.add)),
-                  );
-                }
-              },
-            ),
-          ],
-        );
-                        }
+                        
+                        
         //print(snapshot);
-        List<Map<String, dynamic>> fullData =
-                            snapshot.data as List<Map<String, dynamic>>;
+        if (snapshot.hasData) {
+          fullData = snapshot.data as List<Map<String, dynamic>>;
+        }
+
         return CustomScrollView(
           slivers: [
             SliverAppBar(
@@ -142,7 +69,10 @@ class _MyHomePageState extends State<MyHomePage> {
                               ],
                               children: [
                                 const Divider(),
-                                Padding(padding: const EdgeInsets.all(2)),
+                                Padding(padding: const EdgeInsets.all(2),child: AspectRatio(
+                          aspectRatio: 1,
+                          child: Image.asset('assets/SYLLABI.png'),),),
+                                
                               ],
                             ),
                       ),

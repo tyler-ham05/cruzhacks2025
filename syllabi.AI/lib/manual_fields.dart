@@ -84,7 +84,7 @@ class _EntryFieldsState extends State<EntryFields> {
           ),
           Container(
             decoration: BoxDecoration(
-              color: Colors.grey,
+              color: const Color.fromARGB(255, 255, 205, 125),
               borderRadius: BorderRadius.circular(16),
             ),
             height: 100,
@@ -139,7 +139,7 @@ class _EntryFieldsState extends State<EntryFields> {
           ),
           Container(
             decoration: BoxDecoration(
-              color: Colors.grey,
+              color: const Color.fromARGB(255, 255, 205, 125),
               borderRadius: BorderRadius.circular(16),
             ),
             height: 100,
@@ -170,7 +170,7 @@ class _EntryFieldsState extends State<EntryFields> {
             onFieldSubmitted: (value) {
               setState(() {
                 if (value != "") {
-                  concepts.add(value);
+                  keywords.add(value);
                   _clearTextField(controller2);
                 }
               });
@@ -193,7 +193,7 @@ class _EntryFieldsState extends State<EntryFields> {
           ),
           Container(
             decoration: BoxDecoration(
-              color: Colors.grey,
+              color: const Color.fromARGB(255, 255, 205, 125),
               borderRadius: BorderRadius.circular(16),
             ),
             height: 100,
