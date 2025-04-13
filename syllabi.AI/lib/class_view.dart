@@ -51,20 +51,15 @@ class _ClassViewState extends State<ClassView> {
         slivers: [
           SliverAppBar(
             backgroundColor: const Color.fromARGB(255, 255, 205, 125),
-            floating: true,
-            pinned: true,
-            snap: false,
-            expandedHeight: 100,
-            flexibleSpace: FlexibleSpaceBar(
+              centerTitle:  false,
+          
               title: Text(
                 "Class Organizer",
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
                 ),
               ),
-            ),
           ),
 
           _buildSectionHeader("Concepts To Learn"),
