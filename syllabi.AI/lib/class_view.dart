@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 
 class ClassView extends StatefulWidget {
-  final String name;
-  const ClassView({super.key, required this.name});
-
+  final Map<String, dynamic> data;
+  const ClassView({super.key, required this.data});
+  
   @override
   State<ClassView> createState() => _ClassViewState();
 }
 
 class _ClassViewState extends State<ClassView> {
+  var name;
+  var concepts;
+  var keywords;
+  var dates;
   List<Map<String, String>> test = [
     {"2-27-2025": "Introduction to AI Exam"},
     {"3-15-2025": "Advanced AI Exam"},
@@ -27,27 +31,17 @@ class _ClassViewState extends State<ClassView> {
     {"16-1-2025": "AI Industry Trends Report"},
   ];
 
-  List<String> concepts = [
-    "Alice Johnson",
-    "Bob Smith",
-    "Charlie Lee",
-    "Diana Carter",
-    "Ethan Patel",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    ""
-  ];
+
+  
 
   @override
+  void initState() {
+    super.initState();
+    name = widget.data["course_name"] as String;
+    concepts = widget.data["concepts"] as List<String>;
+    keywords = widget.data["keywords"] as  List<String>;
+    dates = widget.data["dates"] as Map<String, String>;
+  }
   Widget build(BuildContext context) {
     // Flatten test map into entries
     final entries = test.expand((map) => map.entries).toList();

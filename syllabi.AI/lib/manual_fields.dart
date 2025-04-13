@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/home.dart';
 import 'backend_services.dart';
 import 'package:intl/intl.dart';
 
@@ -23,7 +24,7 @@ class _EntryFieldsState extends State<EntryFields> {
   String name = "";
   List<String> concepts = [];
   List<String> keywords = [];
-  List<Map> dates = [];
+  List<Map<String, String>> dates = [];
   String concept = "";
   String keyword = "";
   String date = "";
@@ -273,6 +274,11 @@ class _EntryFieldsState extends State<EntryFields> {
           TextButton(
             onPressed: () {
               pushToDataBase(name, concepts, keywords, dates);
+              Navigator.pushAndRemoveUntil(
+  context,
+  MaterialPageRoute(builder: (_) => MyHomePage(title:"homepage")),
+  (route) => false,
+);
             },
             child: Text("Create Course"),
           ),
